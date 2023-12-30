@@ -8,10 +8,9 @@ This repository contains a userscript designed to add premium features to LogiTy
 
 1. [Introduction](#introduction)
 2. [Installation](#installation)
-3. [How to Use the Undetected AdBlock](#how-to-use-the-undetected-adblock)
-4. [Usage](#usage)
-5. [Contribution](#contribution)
-6. [License](#license)
+3. [Usage](#usage)
+4. [Contribution](#contribution)
+5. [License](#license)
 
 ## Installation
 
@@ -41,10 +40,10 @@ If you have any suggestions, bug reports, or want to contribute to this userscri
 
 ### Contributors
 
-<a href="https://github.com/TheRealJoelmatic/RemoveAdblockThing/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=TheRealJoelmatic/RemoveAdblockThing" />
+<a href="https://github.com/NoirBird/LTPM/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=NoirBird/LTPM" />
 </a>
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
