@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository contains a userscript designed to add premium features to LogiTycoon game. Follow the instructions below to get started.
+This repository contains a userscript designed to add premium features to LogiTycoon game. Follow the instructions below to get started. **PLEASE REMEMBER THAT THE GAME IS BEING MADE BY 1 PERSON, PLEASE CONSIDER BUYING PREMIUM INSTEAD.**
 
 ## Table of Contents:
 
