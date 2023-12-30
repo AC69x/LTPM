@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         LTPM
 // @namespace    https://github.com/NoirBird/LTPM
-// @version      0.4
+// @version      0.5
 // @description  Repair all trucks, Repair all trailers, Sleep all and more coming soon.
 // @author       NoirBird
 // @match        https://www.logitycoon.com/*
+// @updateURL    https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
+// @downloadURL  https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.4.min.js
 // ==/UserScript==
@@ -156,6 +158,7 @@
         repairtrailers();
     }
 
+    // Add the function to the global scope
     window.repairtrucks = repairtrucks;
     window.repairtrailers = repairtrailers;
     window.sleepall = sleepall;
