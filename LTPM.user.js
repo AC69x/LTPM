@@ -1,12 +1,10 @@
 // ==UserScript==
 // @name         LTPM
 // @namespace    https://github.com/NoirBird/LTPM
-// @version      0.5
+// @version      0.6
 // @description  Repair all trucks, Repair all trailers, Sleep all and more coming soon.
 // @author       NoirBird
 // @match        https://www.logitycoon.com/*
-// @updateURL    https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
-// @downloadURL  https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.4.min.js
 // ==/UserScript==
@@ -15,8 +13,25 @@
     'use strict';
 
     window.addEventListener('load', function() {
-        document.querySelector("body > div > div.page-container > div.page-content-wrapper > div > div:nth-child(9) > div:nth-child(1) > div > div.portlet-title.tabbable-line > div.actions > div").innerHTML = '\n                                                <button onclick="repairallmod()" id="repairall" class="btn btn-outline blue btn-sm"><i class="fa fa-cogs"></i> Repair All</button> <a class="btn blue btn-circle btn-outline " href="javascript:;" data-toggle="dropdown" aria-expanded="false">\n                                                    <i class="fa fa-bars"></i> Options                                                    <i class="fa fa-angle-down"></i>\n                                                </a>\n                                                <ul class="dropdown-menu pull-right">\n                                                    <li>\n                                                        <a onclick="repairtrucks()">\n                                                            <i class="fa fa-cogs"></i> Repair all trucks </a>\n                                                    </li>\n                                                    <li class="divider"> </li>\n                                                    <li>\n                                                        <a onclick="tireswitchallsummer()">\n                                                            <i class="fa fa-sun font-red-sunglo"></i> Summer Tires </a>\n                                                    </li>\n                                                    <li>\n                                                        <a onclick="tireswitchallwinter()">\n                                                            <i class="far fa-snowflake font-blue"></i> Winter Tires </a>\n                                                    </li>\n                                                </ul>\n                                            ';
-        document.querySelector("#truckers-buttons > button").innerHTML = document.querySelector("#truckers-buttons > button").innerHTML.replace('(<i class="icon-diamond"></i>)', '');
+        var currentUrl = window.location.href;
+        if (currentUrl.includes('https://www.logitycoon.com/eu1/index.php?a=garage')) {
+            var repairall = document.querySelector("body > div > div.page-container > div.page-content-wrapper > div > div:nth-child(9) > div:nth-child(1) > div > div.portlet-title.tabbable-line > div.actions > div");
+            if (repairall) {
+                repairall.innerHTML = '\n                                                <button onclick="repairallmod()" id="repairall" class="btn btn-outline blue btn-sm"><i class="fa fa-cogs"></i> Repair All</button> <a class="btn blue btn-circle btn-outline " href="javascript:;" data-toggle="dropdown" aria-expanded="false">\n                                                    <i class="fa fa-bars"></i> Options                                                    <i class="fa fa-angle-down"></i>\n                                                </a>\n                                                <ul class="dropdown-menu pull-right">\n                                                    <li>\n                                                        <a onclick="repairtrucks()">\n                                                            <i class="fa fa-cogs"></i> Repair all trucks </a>\n                                                    </li>\n                                                    <li class="divider"> </li>\n                                                    <li>\n                                                        <a onclick="tireswitchallsummer()">\n                                                            <i class="fa fa-sun font-red-sunglo"></i> Summer Tires </a>\n                                                    </li>\n                                                    <li>\n                                                        <a onclick="tireswitchallwinter()">\n                                                            <i class="far fa-snowflake font-blue"></i> Winter Tires </a>\n                                                    </li>\n                                                </ul>\n                                            ';
+            }
+        }
+        if (currentUrl.includes('https://www.logitycoon.com/eu1/index.php?a=employees')) {
+            var button = document.querySelector("#truckers-buttons > button");
+            if (button) {
+                button.innerHTML = button.innerHTML.replace('(<i class="icon-diamond"></i>)', '');
+            }
+        }
+        if (currentUrl.includes('https://www.logitycoon.com/eu1/index.php?a=freight')) {
+            var assignallfix = document.querySelector("#Premium");
+            if (assignallfix) {
+                assignallfix.outerHTML = '<button type="button" onclick="assignallmod(\''+location.href.split("=")[2]+'\')" id="Premjum" class="btn btn-default btn-sm">\n                                                                                 Assign All</button>';
+            }
+        }
     });
 
     function repairtruck(truck){
@@ -158,9 +173,57 @@
         repairtrailers();
     }
 
-    // Add the function to the global scope
+    function extractToken() {
+        var searchPattern = /token: "(\d+)"/;
+        let shmit = []
+        function searchTextNode(node) {
+            if (node.nodeType === 3) {
+                var match = node.nodeValue.match(searchPattern);
+                if (match) {
+                    var extractedDigits = match[1];
+                    shmit.push(extractedDigits)
+                }
+            } else if (node.nodeType === 1 || node.nodeType === 9) {
+                for (var i = 0; i < node.childNodes.length; i++) {
+                    searchTextNode(node.childNodes[i]);
+                }
+            }
+        }
+
+        searchTextNode(document.body);
+        shmit = [...new Set(shmit)];
+        return shmit[0]
+    }
+
+    function assignallmod(freight) {
+        const tokenn = extractToken();
+        jQuery.ajax({
+            url: "ajax/freight_autowhemployee.php",
+            data: {n: freight, token: tokenn},
+            type: "GET",
+            success:function(data){},
+            error:function (){}
+        });
+        jQuery.ajax({
+            url: "ajax/freight_autotrailer.php",
+            data: {n: freight, token: tokenn},
+            type: "GET",
+            success:function(data){},
+            error:function (){}
+        });
+        jQuery.ajax({
+            url: "ajax/freight_autotruck.php",
+            data: {n: freight, token: tokenn},
+            type: "GET",
+            success:function(data){},
+            error:function (){}
+        });
+        location.reload();
+    }
+
     window.repairtrucks = repairtrucks;
     window.repairtrailers = repairtrailers;
     window.sleepall = sleepall;
     window.repairallmod = repairallmod;
+    window.assignallmod = assignallmod;
 })();
