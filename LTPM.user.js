@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LTPM
 // @namespace    https://github.com/NoirBird/LTPM
-// @version      0.9
+// @version      1.0
 // @description  Repair all trucks, Repair all trailers, Sleep all and more coming soon.
 // @author       NoirBird
 // @match        https://www.logitycoon.com/*
@@ -242,7 +242,6 @@
 
     function assignallmod(freight) {
         const tokenn = extractToken();
-        setTimeout(function() {
             jQuery.ajax({
                 url: "ajax/freight_autowhemployee.php",
                 data: {n: freight, token: tokenn},
@@ -250,8 +249,6 @@
                 success:function(data){},
                 error:function (){}
             });
-        }, 300);
-        setTimeout(function() {
             jQuery.ajax({
                 url: "ajax/freight_autotrailer.php",
                 data: {n: freight, token: tokenn},
@@ -259,8 +256,6 @@
                 success:function(data){},
                 error:function (){}
             });
-        }, 300);
-        setTimeout(function() {
             jQuery.ajax({
                 url: "ajax/freight_autotruck.php",
                 data: {n: freight, token: tokenn},
@@ -268,7 +263,6 @@
                 success:function(data){},
                 error:function (){}
             });
-        }, 300);
         location.reload();
     }
 
