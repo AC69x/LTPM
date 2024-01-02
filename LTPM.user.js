@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LTPM
 // @namespace    https://github.com/NoirBird/LTPM
-// @version      0.8
+// @version      0.9
 // @description  Repair all trucks, Repair all trailers, Sleep all and more coming soon.
 // @author       NoirBird
 // @match        https://www.logitycoon.com/*
@@ -38,6 +38,7 @@
         if (premiumbutton) {
             premiumbutton.innerHTML = "";
         }
+        checkForUpdate();
     });
 
     function repairtruck(truck){
@@ -172,6 +173,44 @@
         shmit = [...new Set(shmit)];
         shmit.forEach((element) => employeesleeep(element));
         location.reload()
+    }
+
+    function checkForUpdate(){
+
+        if (!(window.location.href.includes("logitycoon.com"))){
+            return;
+        }
+
+        const scriptUrl = 'https://raw.githubusercontent.com/NoirBird/LTPM/main/LTPM.user.js';
+
+        fetch(scriptUrl)
+        .then(response => response.text())
+        .then(data => {
+            // Extract version from the script on GitHub
+            const match = data.match(/@version\s+(\d+\.\d+)/);
+            if (match) {
+                const githubVersion = parseFloat(match[1]);
+                const currentVersion = parseFloat(GM_info.script.version);
+
+                if (githubVersion > currentVersion) {
+                    console.log('LTPM: A new version is available. Please update your script.');
+
+                    var result = window.confirm("LTPM: A new version is available. Please update your script.");
+
+                    if (result) {
+                        window.location.replace(scriptUrl);
+                    }
+
+                } else {
+                    console.log('LTPM: You have the latest version of the script.');
+                }
+            } else {
+                console.error('LTPM: Unable to extract version from the GitHub script.');
+            }
+        })
+        .catch(error => {
+            console.error('LTPM: Error checking for updates:', error);
+        });
     }
 
     function repairallmod() {
