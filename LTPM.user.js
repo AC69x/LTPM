@@ -7,6 +7,7 @@
 // @match        https://www.logitycoon.com/*
 // @updateURL    https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
 // @downloadURL  https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
+// @icon         https://www.logitycoon.com/eu1/assets/extra/img/favicon.png
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.4.min.js
 // ==/UserScript==
