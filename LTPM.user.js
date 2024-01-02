@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         LTPM
 // @namespace    https://github.com/NoirBird/LTPM
-// @version      0.6
+// @version      0.8
 // @description  Repair all trucks, Repair all trailers, Sleep all and more coming soon.
 // @author       NoirBird
 // @match        https://www.logitycoon.com/*
+// @updateURL    https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
+// @downloadURL  https://github.com/NoirBird/LTPM/raw/main/LTPM.user.js
 // @grant        none
 // @require      https://code.jquery.com/jquery-3.6.4.min.js
 // ==/UserScript==
@@ -31,6 +33,10 @@
             if (assignallfix) {
                 assignallfix.outerHTML = '<button type="button" onclick="assignallmod(\''+location.href.split("=")[2]+'\')" id="Premjum" class="btn btn-default btn-sm">\n                                                                                 Assign All</button>';
             }
+        }
+        var premiumbutton = document.querySelector("body > div > div.page-header.navbar > div > div.top-menu > ul > li:nth-child(9)");
+        if (premiumbutton) {
+            premiumbutton.innerHTML = "";
         }
     });
 
@@ -197,27 +203,33 @@
 
     function assignallmod(freight) {
         const tokenn = extractToken();
-        jQuery.ajax({
-            url: "ajax/freight_autowhemployee.php",
-            data: {n: freight, token: tokenn},
-            type: "GET",
-            success:function(data){},
-            error:function (){}
-        });
-        jQuery.ajax({
-            url: "ajax/freight_autotrailer.php",
-            data: {n: freight, token: tokenn},
-            type: "GET",
-            success:function(data){},
-            error:function (){}
-        });
-        jQuery.ajax({
-            url: "ajax/freight_autotruck.php",
-            data: {n: freight, token: tokenn},
-            type: "GET",
-            success:function(data){},
-            error:function (){}
-        });
+        setTimeout(function() {
+            jQuery.ajax({
+                url: "ajax/freight_autowhemployee.php",
+                data: {n: freight, token: tokenn},
+                type: "GET",
+                success:function(data){},
+                error:function (){}
+            });
+        }, 300);
+        setTimeout(function() {
+            jQuery.ajax({
+                url: "ajax/freight_autotrailer.php",
+                data: {n: freight, token: tokenn},
+                type: "GET",
+                success:function(data){},
+                error:function (){}
+            });
+        }, 300);
+        setTimeout(function() {
+            jQuery.ajax({
+                url: "ajax/freight_autotruck.php",
+                data: {n: freight, token: tokenn},
+                type: "GET",
+                success:function(data){},
+                error:function (){}
+            });
+        }, 300);
         location.reload();
     }
 
